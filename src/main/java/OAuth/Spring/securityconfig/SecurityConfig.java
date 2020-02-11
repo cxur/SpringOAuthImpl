@@ -31,8 +31,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+//	@Override
+//	protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+//		authenticationManagerBuilder.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
+//	}
+	
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
 	}
 
@@ -48,8 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.csrf()
         .disable()
-    .formLogin()
-        .disable()
+    .formLogin().loginPage("/loginlink").loginProcessingUrl("/processLogin").successHandler(oAuthSuccessHandler).and()
     .httpBasic().disable().authorizeRequests(a -> a
                 .antMatchers("/loginlink","/h2-console/**").permitAll()
                 .anyRequest().authenticated()

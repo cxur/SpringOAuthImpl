@@ -42,7 +42,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //			rolesList.add(userRole.getRoles());
 //		}
 
-//		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+		grantedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
 //		for (Roles role : rolesList) {
 //			grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
 //		}
@@ -50,7 +51,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //		return new org.springframework.security.core.userdetails.User(userInfo.getEmailAddress(),
 //				userInfo.getPassword(), grantedAuthorities);
 		return new org.springframework.security.core.userdetails.User(userInfo.getEmailAddress(),
-				userInfo.getPassword(),null);
+				userInfo.getPassword(),grantedAuthorities);
 
 	}
 
